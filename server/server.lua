@@ -1,9 +1,9 @@
-RegisterServerEvent('wwv_jobs:startjob')
-AddEventHandler('wwv_jobs:startjob', function(job)
+RegisterServerEvent('jobMaster:startjob')
+AddEventHandler('jobMaster:startjob', function(job)
 	local _job = job
     TriggerEvent('redemrp:getPlayerFromId', source, function(user)
         if user.getJob() == _job.jobName then
-            TriggerClientEvent('wwv_jobs:start', source)
+            TriggerClientEvent('jobMaster:start', source)
             TriggerClientEvent("redemrp_notification:start", source, Language.translate[Config.lang]['gopos'], 5)
         else
             TriggerClientEvent("redemrp_notification:start", source, Language.translate[Config.lang]['nojob'].._job.jobName, 5)
@@ -11,8 +11,8 @@ AddEventHandler('wwv_jobs:startjob', function(job)
     end)
 end)
 
-RegisterServerEvent('wwv_jobs:paid')
-AddEventHandler('wwv_jobs:paid', function(money, xp)
+RegisterServerEvent('jobMaster:paid')
+AddEventHandler('jobMaster:paid', function(money, xp)
     TriggerEvent('redemrp:getPlayerFromId', source, function(user)
         user.addMoney(money)
         user.addXP(xp)
@@ -20,8 +20,8 @@ AddEventHandler('wwv_jobs:paid', function(money, xp)
 end)
 
 
-RegisterNetEvent("wwv_jobs:setJob")
-AddEventHandler("wwv_jobs:setJob", function(jobname)
+RegisterNetEvent("jobMaster:setJob")
+AddEventHandler("jobMaster:setJob", function(jobname)
 	local _jobname = jobname
 	TriggerEvent('redemrp:getPlayerFromId', source, function(user)
 		user.setJob(_jobname)
@@ -29,8 +29,8 @@ AddEventHandler("wwv_jobs:setJob", function(jobname)
 	end)
 end)
 
-RegisterNetEvent("wwv_jobs:isJob")
-AddEventHandler("wwv_jobs:isJob", function(jobname, callback)
+RegisterNetEvent("jobMaster:isJob")
+AddEventHandler("jobMaster:isJob", function(jobname, callback)
 	local _jobname = jobname
 	TriggerEvent('redemrp:getPlayerFromId', source, function(user)
 		if user.getJob() == _jobname then
