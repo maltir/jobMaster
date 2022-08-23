@@ -9,7 +9,8 @@ end
 RegisterServerEvent('jobMaster:startjob')
 AddEventHandler('jobMaster:startjob', function(job)
 	local _job = job
-    TriggerEvent('redemrp:getPlayerFromId', source, function(user)
+	if Config.framework == "redemrp" then 
+		TriggerEvent('redemrp:getPlayerFromId', source, function(user)
         if user.getJob() == _job.jobName then
             TriggerClientEvent('jobMaster:start', source)
             serverNotification(source, Language.translate[Config.lang]['gopos'], 5)
@@ -17,6 +18,17 @@ AddEventHandler('jobMaster:startjob', function(job)
             serverNotification(source, Language.translate[Config.lang]['nojob'].._job.jobName, 5)
         end
     end)
+	elseif Config.framework == "vorp" then
+		local User = VorpCore.getUser(_source)
+		local Character = User.getUsedCharacter
+		if Character.job == _job.jobName then
+            TriggerClientEvent('jobMaster:start', source)
+            serverNotification(source, Language.translate[Config.lang]['gopos'], 5)
+        else
+            serverNotification(source, Language.translate[Config.lang]['nojob'].._job.jobName, 5)
+        end
+	end
+    
 end)
 
 RegisterServerEvent('jobMaster:paid')
