@@ -6,11 +6,11 @@ You have some easy example job already done in the code. Go add all the job you 
 
 ## Requirements
  
-[mysql-async](https://github.com/amakuu/mysql-async-temporary)
+[redemrp_notification](https://github.com/Ktos93/redemrp_notification)
 
-[redem](https://github.com/kanersps/redem)
+OR
 
-[esplugin_mysql](https://github.com/RedEM-RP/esplugin_mysql)
+[vorp-core](https://github.com/VORPCORE/VORP-Core)
 
 ## Configuration
 
