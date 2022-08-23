@@ -43,13 +43,8 @@ Citizen.CreateThread(function()
 					DrawTxt(info.startWorkMsg, 0.50, 0.90, 0.7, 0.7, true, 255, 255, 255, 255, true)
 					--suppr
 					if IsControlJustPressed(2, 0x4AF4D473)then
-						--TriggerServerEvent('jobMaster:isJob', title, function(is)
-						--	if not is then
-						--		TriggerServerEvent('jobMaster:setJob', title)
-						--	end
-						--end)
 						TriggerServerEvent('jobMaster:setJob', title)
-						TriggerEvent("redemrp_notification:start", Language.translate[Config.lang]['youre']..title..Language.translate[Config.lang]['now'], 5)
+						sendNotification(Language.translate[Config.lang]['youre']..title..Language.translate[Config.lang]['now'], 5)
 					end
 				end
 			end
@@ -86,7 +81,7 @@ Citizen.CreateThread(function()
 						RemoveBlip(blip)
 						farmId = farmId + 1
 						if activeJob.farm[farmId] ~= nil then
-							TriggerEvent("redemrp_notification:start", Language.translate[Config.lang]['goto'], 5)
+							sendNotification(Language.translate[Config.lang]['goto'], 5)
 							blip = N_0x554d9d53f696d002(203020899, activeJob.farm[farmId].x, activeJob.farm[farmId].y, activeJob.farm[farmId].z)
 							SetBlipSprite(blip, -570710357, 1)
 						else
@@ -100,7 +95,7 @@ Citizen.CreateThread(function()
 								TriggerEvent('jobMaster:car',activeJob,vehiculeId)
 							else
 								livraison = true
-								TriggerEvent("redemrp_notification:start", Language.translate[Config.lang]['carry'], 5)
+								sendNotification(Language.translate[Config.lang]['carry'], 5)
 								RemoveBlip(blip)
 								blip = N_0x554d9d53f696d002(203020899, activeJob.livraison.x, activeJob.livraison.y, activeJob.livraison.z)
 								SetBlipSprite(blip, -570710357, 1)
@@ -115,7 +110,7 @@ Citizen.CreateThread(function()
 					--entrer
 					if IsControlJustPressed(0, 0xC7B5340A) then
 						animation(activeJob.animationVehicule, activeJob.VehiculeTime,Language.translate[Config.lang]['placing'])
-						TriggerEvent("redemrp_notification:start", Language.translate[Config.lang]['carry'], 5)
+						sendNotification(Language.translate[Config.lang]['carry'], 5)
 						RemoveBlip(blip)
 						blip = N_0x554d9d53f696d002(203020899, activeJob.livraison.x, activeJob.livraison.y, activeJob.livraison.z)
 						SetBlipSprite(blip, -570710357, 1)
@@ -135,14 +130,14 @@ Citizen.CreateThread(function()
 							if activeJob.vehiculeSpawn[1] ~= nil then
 								DeleteVehicle(GetVehiclePedIsIn(PlayerPedId()))
 							end
-							TriggerEvent("redemrp_notification:start", Language.translate[Config.lang]['completejob'] ..money.."$ | "..xp.."XP", 5)
+							sendNotification(Language.translate[Config.lang]['completejob'] ..money.."$ | "..xp.."XP", 5)
 							RemoveBlip(blip)
 							TriggerServerEvent('jobMaster:paid', money, xp)
 							livraison = false
 							jobStarted = false
 							activeJob = nil
 						else
-							TriggerEvent("redemrp_notification:start", Language.translate[Config.lang]['noveh'], 5)
+							sendNotification(Language.translate[Config.lang]['noveh'], 5)
 						end
 					end
 				end
@@ -157,7 +152,7 @@ AddEventHandler('jobMaster:start', function(source)
 		blip = N_0x554d9d53f696d002(203020899, activeJob.farm[1].x, activeJob.farm[1].y, activeJob.farm[1].z)
 		SetBlipSprite(blip, -570710357, 1)
 	else
-		TriggerEvent("redemrp_notification:start", Language.translate[Config.lang]['nofarmzone'], 10)
+		sendNotification(Language.translate[Config.lang]['nofarmzone'], 10)
 	end
 end)
 
@@ -199,4 +194,12 @@ end
 
 function CreateVarString(p0, p1, variadic)
     return Citizen.InvokeNative(0xFA925AC00EB830B9, p0, p1, variadic, Citizen.ResultAsLong())
+end
+
+function sendNotification(text, notifTime)
+	if Config.framework == "redemrp" then 
+		TriggerEvent("redemrp_notification:start", text, notifTime)
+	elseif Config.framework == "vorp" then
+		TriggerEvent("vorp:TipRight", text, notifTime)
+	end
 end

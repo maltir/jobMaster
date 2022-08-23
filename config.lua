@@ -1,5 +1,6 @@
 Config = {}
 Config.lang = 'fr'
+Config.framework = 'redmrp' -- redmrp or vorp
 
 Config.jobs = {
 	{

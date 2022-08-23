@@ -4,7 +4,20 @@ This script was designed to not have to make 1 script by "farming" type job (min
 
 You have some easy example job already done in the code. Go add all the job you want in the config.lua for your server.
 
+## Requirements
+ 
+[mysql-async](https://github.com/amakuu/mysql-async-temporary)
+
+[redem](https://github.com/kanersps/redem)
+
+[esplugin_mysql](https://github.com/RedEM-RP/esplugin_mysql)
+
 ## Configuration
+
+### Framework
+
+This script support 2 frameworks at the moment. **Redmrp** and **VORP**.
+In the `config.lua` you can change te parameter `Config.framework` to choose wich framework you want to use.
 
 ### Job
 For each job you have to write some entry listed here
