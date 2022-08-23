@@ -17,6 +17,7 @@ You have some easy example job already done in the code. Go add all the job you 
 ### Framework
 
 This script support 2 frameworks at the moment. **Redmrp** and **VORP**.
+
 In the `config.lua` you can change te parameter `Config.framework` to choose wich framework you want to use.
 
 ### Job
